@@ -396,6 +396,19 @@ class Job(AbstractJob):
             return self.dag.container_imgs[self.container_img_url]
         return None
 
+    # you might need this
+    # @property
+    # def container_img(self):
+    #     if self.dag.workflow.use_singularity and self.container_img_url:
+    #         try:
+    #             img = self.dag.container_imgs[self.container_img_url]
+    #         except KeyError:
+    #             logger.warning("couldn't find the container in the dict")
+    #             img = self.container_img_url
+    #             logger.warning(f"Using {img} instead")
+    #         return img
+    #     return None
+
     @property
     def env_modules(self):
         return self.rule.env_modules

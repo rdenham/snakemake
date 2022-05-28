@@ -1894,7 +1894,10 @@ class KubernetesExecutor(ClusterExecutor):
             )
 
         # capabilities
-        if job.needs_singularity and self.workflow.use_singularity:
+        if not job.needs_singularity:
+            logger.warning("Job says it doesn't need singularity but I'm going to ignore that")
+#       if job.needs_singularity and self.workflow.use_singularity:
+        if self.workflow.use_singularity:
             # TODO this should work, but it doesn't currently because of
             # missing loop devices
             # singularity inside docker requires SYS_ADMIN capabilities
