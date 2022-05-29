@@ -23,6 +23,7 @@ try:
     # third-party modules
     import boto3
     import botocore
+    from botocore.utils import fix_s3_host
 except ImportError as e:
     raise WorkflowError(
         "The Python 3 package 'boto3' "
@@ -176,8 +177,10 @@ class S3Helper(object):
             endpoint = os.getenv('AWS_S3_ENDPOINT')
             if endpoint:
                 kwargs["endpoint_url"] = endpoint
-                
+        print(kwargs)
         self.s3 = boto3.resource("s3", **kwargs)
+        self.s3.meta.client.meta.events.unregister('before-sign.s3', fix_s3_host)
+
 
     def bucket_exists(self, bucket_name):
         try:
