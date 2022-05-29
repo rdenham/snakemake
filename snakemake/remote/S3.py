@@ -177,7 +177,6 @@ class S3Helper(object):
             endpoint = os.getenv('AWS_S3_ENDPOINT')
             if endpoint:
                 kwargs["endpoint_url"] = endpoint
-        print(kwargs)
         self.s3 = boto3.resource("s3", **kwargs)
         self.s3.meta.client.meta.events.unregister('before-sign.s3', fix_s3_host)
 
